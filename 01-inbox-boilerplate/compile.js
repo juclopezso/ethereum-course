@@ -7,8 +7,24 @@ const inboxPath = path.resolve(__dirname, 'contracts', 'Inbox.sol');
 // read the raw source code
 const source = fs.readFileSync(inboxPath, 'utf8');
 
-// module.exports = solc.compile(source, 1); // 1 is the number of contracts trying to compile
-module.exports = solc.compile(source, 1).contracts[":Inbox"]; // just returns the Inbox.sol contract
-
-
 // interface: ABI -> like bridge between contract and javascript
+
+const input = {
+  language: 'Solidity',
+  sources: {
+    'Inbox.sol': {
+      content: source,
+    },
+  },
+  settings: {
+    outputSelection: {
+      '*': {
+        '*': ['*'],
+      },
+    },
+  },
+};
+ 
+module.exports = JSON.parse(solc.compile(JSON.stringify(input))).contracts[
+  'Inbox.sol'
+].Inbox;

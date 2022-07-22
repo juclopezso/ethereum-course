@@ -6,8 +6,9 @@ const Web3 = require('web3'); // Web3 is a constructor function that's why it's 
 // each instance of web3 can connect to a different ethereum network
 // provider is like a gateway to the ethereum network
 const web3 = new Web3(ganache.provider()); // instance of web3 connect to ganache
-// get the interface of the compiled contract
-const { interface, bytecode } = require('../compile');
+
+const { abi, evm } = require('../compile');
+
 
 // mocha is a test running framework
 // to run mocha test add this to the package.json in the scripts section: "test": "mocha"
@@ -31,9 +32,12 @@ beforeEach(async() => {
   accounts = await web3.eth.getAccounts();
 
   // use one of the accounts to deploy the contract
-  inbox = await new web3.eth.Contract(JSON.parse(interface))
-    .deploy({ data: bytecode, arguments: [initMessage] })
-    .send({ from: accounts[0], gas: '1000000'})
+  inbox = await new web3.eth.Contract(abi)
+    .deploy({
+      data: evm.bytecode.object,
+      arguments: [initMessage],
+    })
+    .send({ from: accounts[0], gas: '1000000' });
 
 });
 
