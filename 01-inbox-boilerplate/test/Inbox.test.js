@@ -44,12 +44,14 @@ describe('Dummy', () => {
   });
 
   it('has a default message', async() => {
+    // call() instant read data of a contract
     const message = await inbox.methods.message().call();
     assert.equal(message, initMessage);
   });
 
   it('can change message', async() => {
     const newMessage = 'New message';
+    // send() write data to a contract
     await inbox.methods.setMessage(newMessage).send({ from: accounts[0] });
     const message = await inbox.methods.message().call();
     assert.equal(message, newMessage);
