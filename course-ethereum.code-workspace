@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "01-inbox-boilerplate"
+		},
+		{
+			"path": "02-lottery-contract"
+		},
+		{
+			"path": "02-lottery-react"
+		}
+	],
+	"settings": {}
+}
